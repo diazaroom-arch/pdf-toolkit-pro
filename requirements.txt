@@ -1,0 +1,16 @@
+# Core dependencies
+pypdf==4.0.1
+click==8.1.7
+Pillow==10.2.0
+tqdm==4.66.1
+colorama==0.4.6
+
+# Optional OCR support
+# Uncomment if you need OCR functionality:
+# pytesseract==0.3.10
+
+# Development dependencies (install with: pip install -r requirements-dev.txt)
+# pytest==8.0.0
+# pytest-cov==4.1.0
+# black==24.1.1
+# flake8==7.0.0
