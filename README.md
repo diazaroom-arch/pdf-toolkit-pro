@@ -1,309 +1,264 @@
 # 🚀 PDF Toolkit Pro
 
-> Professional command-line toolkit for PDF manipulation and automation
+> Herramienta profesional de línea de comandos para automatización de PDFs
 
-[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Licencia: MIT](https://img.shields.io/badge/Licencia-MIT-blue.svg)](LICENSE)
 [![Python](https://img.shields.io/badge/python-3.8+-blue.svg)](https://www.python.org/downloads/)
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 
-## 🎯 What is PDF Toolkit Pro?
+## 🎯 ¿Qué es PDF Toolkit Pro?
 
-PDF Toolkit Pro is a powerful, production-ready command-line tool designed to automate PDF operations at scale. Built for developers, QA teams, and businesses that need to process hundreds or thousands of PDFs efficiently.
+PDF Toolkit Pro es una herramienta de línea de comandos potente y profesional diseñada para automatizar operaciones con archivos PDF a gran escala. Construida para desarrolladores, equipos de QA y empresas que necesitan procesar cientos o miles de PDFs de manera eficiente.
 
-**Stop wasting time with manual PDF operations.** Automate everything.
+**Deja de perder tiempo con operaciones manuales de PDF.** Automatiza todo.
 
-## ✨ Features
+## ✨ Características
 
-- ✅ **Merge** multiple PDFs into one document
-- ✅ **Split** PDFs by pages, ranges, or into individual pages
-- ✅ **Extract** specific pages from any PDF
-- ✅ **Add bookmarks** automatically when merging
-- ✅ **Batch process** entire directories
-- ✅ **Progress bars** for long operations
-- ✅ **Detailed logging** and error handling
-- ✅ **Cross-platform** (Windows, macOS, Linux)
+- ✅ **Combinar** múltiples PDFs en un solo documento
+- ✅ **Dividir** PDFs por páginas, rangos o en páginas individuales
+- ✅ **Extraer** páginas específicas de cualquier PDF
+- ✅ **Información** detallada de archivos PDF
+- ✅ **Contar páginas** rápidamente
+- ✅ **Procesamiento por lotes** de directorios completos
+- ✅ **Barras de progreso** para operaciones largas
+- ✅ **Logging detallado** y manejo de errores
+- ✅ **Multiplataforma** (Windows, macOS, Linux)
 
-## 🚀 Quick Start
+## 🚀 Inicio Rápido
 
-### Installation
-
+### Instalación
 ```bash
-# Clone the repository
-git clone https://github.com/yourusername/pdf-toolkit-pro.git
+# Clonar el repositorio
+git clone https://github.com/diazaroom-arch/pdf-toolkit-pro.git
 cd pdf-toolkit-pro
 
-# Install in development mode
+# Crear entorno virtual
+python -m venv venv
+
+# Activar entorno virtual
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+# Instalar
 pip install -e .
-
-# Or install from requirements
-pip install -r requirements.txt
 ```
 
-### Basic Usage
-
+### Uso Básico
 ```bash
-# Merge PDFs
-pdf-toolkit merge file1.pdf file2.pdf file3.pdf -o combined.pdf
+# Combinar PDFs
+pdf-toolkit merge archivo1.pdf archivo2.pdf archivo3.pdf -o combinado.pdf
 
-# Split PDF every 10 pages
-pdf-toolkit split large_document.pdf --pages 10
+# Dividir PDF cada 10 páginas
+pdf-toolkit split documento_grande.pdf --pages 10
 
-# Extract specific pages
-pdf-toolkit extract document.pdf --pages 1,5,10-15 -o selection.pdf
+# Contar páginas
+pdf-toolkit count documento.pdf
 
-# Get PDF info
-pdf-toolkit info document.pdf
+# Información del PDF
+pdf-toolkit info documento.pdf
 ```
 
-## 📖 Detailed Usage
+## 📖 Documentación Detallada
 
-### Merge Operations
+### Operaciones de Combinación
 
-#### Merge multiple files
+#### Combinar múltiples archivos
 ```bash
-pdf-toolkit merge report1.pdf report2.pdf report3.pdf -o final_report.pdf
+pdf-toolkit merge reporte1.pdf reporte2.pdf reporte3.pdf -o reporte_final.pdf
 ```
 
-#### Merge all PDFs in a directory
+#### Combinar todos los PDFs de un directorio
 ```bash
-pdf-toolkit merge-dir /path/to/pdfs/ -o combined.pdf
+pdf-toolkit merge-dir /ruta/a/pdfs/ -o combinado.pdf
 ```
 
-#### Merge with bookmarks (table of contents)
+#### Combinar recursivamente (incluyendo subdirectorios)
 ```bash
-pdf-toolkit merge chapter*.pdf -o book.pdf --bookmarks
+pdf-toolkit merge-dir /documentos/ -o todos_los_docs.pdf --recursive
 ```
 
-#### Merge recursively (including subdirectories)
+### Operaciones de División
+
+#### Dividir cada N páginas
 ```bash
-pdf-toolkit merge-dir /documents/ -o all_docs.pdf --recursive
+# Crear archivos de 10 páginas cada uno
+pdf-toolkit split documento.pdf --pages 10
 ```
 
-### Split Operations
-
-#### Split every N pages
+#### Dividir en páginas específicas
 ```bash
-# Create files with 10 pages each
-pdf-toolkit split document.pdf --pages 10
+# Dividir en las páginas 25 y 50
+pdf-toolkit split-at documento.pdf --at 25 --at 50
+
+# Resultado: 3 archivos (páginas 1-24, 25-49, 50-final)
 ```
 
-#### Split at specific page numbers
+#### Dividir en páginas individuales
 ```bash
-# Split at pages 25 and 50
-pdf-toolkit split-at document.pdf --at 25 --at 50
-
-# Result: 3 files (pages 1-24, 25-49, 50-end)
+# Extraer cada página como PDF separado
+pdf-toolkit split-pages documento.pdf --output-dir ./paginas/
 ```
 
-#### Split into individual pages
+#### Patrones de salida personalizados
 ```bash
-# Extract every page as a separate PDF
-pdf-toolkit split-pages document.pdf --output-dir ./pages/
+pdf-toolkit split doc.pdf -p 5 --pattern "seccion_{num}.pdf"
+# Crea: seccion_1.pdf, seccion_2.pdf, ...
 ```
 
-#### Custom output patterns
+### Información y Utilidades
 ```bash
-pdf-toolkit split doc.pdf -p 5 --pattern "section_{num}.pdf"
-# Creates: section_1.pdf, section_2.pdf, ...
+# Obtener información detallada de un PDF
+pdf-toolkit info documento.pdf
+
+# Salida:
+# 📄 Información del PDF: documento.pdf
+#   Ruta:       /ruta/completa/al/documento.pdf
+#   Tamaño:     2.5 MB
+#   Páginas:    150
+#   Metadatos:
+#     Título:   Documento de Ejemplo
+#     Autor:    Nombre del Autor
+
+# Contar páginas rápidamente
+pdf-toolkit count reporte.pdf
+# 📄 reporte.pdf tiene 42 páginas
+
+# Ver versión
+pdf-toolkit version
 ```
 
-### Extract Operations
+## 🎯 Casos de Uso
 
-```bash
-# Extract pages 1, 5, and 10-15
-pdf-toolkit extract document.pdf --pages 1,5,10-15 -o selection.pdf
+### Para Desarrolladores
+- Automatizar generación de reportes
+- Procesar exportaciones PDF por lotes
+- Crear datasets de prueba
+- Construir pipelines de procesamiento de PDFs
 
-# Extract first 10 pages
-pdf-toolkit extract document.pdf --pages 1-10 -o intro.pdf
-```
+### Para Equipos de QA
+- Generar documentación de pruebas
+- Combinar PDFs de resultados de tests
+- Extraer casos de prueba específicos
+- Organizar artefactos de testing
 
-### Information
+### Para Empresas
+- Combinar lotes de facturas
+- Dividir contratos grandes
+- Organizar documentación
+- Procesar envíos de formularios
+- Gestión de archivos
 
-```bash
-# Get detailed info about a PDF
-pdf-toolkit info document.pdf
+## 🛠️ Detalles Técnicos
 
-# Output:
-# 📄 PDF Information: document.pdf
-#   Path:       /full/path/to/document.pdf
-#   Size:       2.5 MB
-#   Pages:      150
-#   Metadata:
-#     Title:    Sample Document
-#     Author:   John Doe
-```
-
-## 🎯 Use Cases
-
-### For Developers
-- Automate report generation
-- Batch process PDF exports
-- Create test datasets
-- Build PDF processing pipelines
-
-### For QA Teams
-- Generate test documentation
-- Combine test result PDFs
-- Extract specific test cases
-- Organize test artifacts
-
-### For Businesses
-- Merge invoice batches
-- Split large contracts
-- Organize documentation
-- Process form submissions
-- Archive management
-
-## 🛠️ Technical Details
-
-### Architecture
-
+### Arquitectura
 ```
 pdf-toolkit-pro/
 ├── src/pdf_toolkit/
-│   ├── cli.py           # Command-line interface
-│   ├── merge.py         # Merge operations
-│   ├── split.py         # Split operations
-│   ├── extract.py       # Page extraction
-│   ├── utils.py         # Common utilities
-│   └── config.py        # Configuration
-├── tests/               # Unit tests
-└── examples/            # Usage examples
+│   ├── cli.py           # Interfaz de línea de comandos
+│   ├── merge.py         # Operaciones de combinación
+│   ├── split.py         # Operaciones de división
+│   ├── utils.py         # Utilidades comunes
+│   └── config.py        # Configuración
+├── tests/               # Tests unitarios
+└── examples/            # Ejemplos de uso
 ```
 
-### Tech Stack
+### Stack Tecnológico
 
-- **Python 3.8+** - Modern Python features
-- **pypdf** - PDF manipulation library
-- **Click** - Beautiful CLI framework
-- **tqdm** - Progress bars
-- **Pillow** - Image processing (for future features)
-- **pytest** - Testing framework
+- **Python 3.8+** - Características modernas de Python
+- **pypdf** - Librería de manipulación de PDFs
+- **Click** - Framework para CLI elegante
+- **tqdm** - Barras de progreso
+- **Pillow** - Procesamiento de imágenes
+- **pytest** - Framework de testing
 
 ## 🧪 Testing
-
 ```bash
-# Run all tests
+# Ejecutar todos los tests
 pytest
 
-# Run with coverage
+# Ejecutar con cobertura
 pytest --cov=pdf_toolkit
 
-# Run specific test file
+# Ejecutar archivo de test específico
 pytest tests/test_merge.py
 ```
 
-## 📦 Advanced Options
+## 📦 Opciones Avanzadas
 
-### Overwrite Protection
+### Protección contra Sobrescritura
 
-By default, PDF Toolkit Pro won't overwrite existing files:
-
+Por defecto, PDF Toolkit Pro no sobrescribirá archivos existentes:
 ```bash
-# This will fail if output.pdf exists
+# Esto fallará si output.pdf existe
 pdf-toolkit merge *.pdf -o output.pdf
 
-# Use --overwrite to force
+# Usar --overwrite para forzar
 pdf-toolkit merge *.pdf -o output.pdf --overwrite
 ```
 
-### Progress Bars
-
+### Barras de Progreso
 ```bash
-# Disable progress bar for scripts/automation
+# Deshabilitar barra de progreso para scripts/automatización
 pdf-toolkit merge *.pdf -o output.pdf --no-progress
 ```
 
-### Logging
+## 🤝 Contribuciones
 
-```bash
-# Set log level via environment variable
-export PDF_TOOLKIT_LOG_LEVEL=DEBUG
-pdf-toolkit merge *.pdf -o output.pdf
-```
+Las contribuciones son bienvenidas. Por favor, siéntete libre de enviar un Pull Request.
 
-## 🚧 Roadmap
+1. Fork el repositorio
+2. Crea tu rama de feature (`git checkout -b feature/CaracteristicaIncreible`)
+3. Commit tus cambios (`git commit -m 'Agregar alguna CaracteristicaIncreible'`)
+4. Push a la rama (`git push origin feature/CaracteristicaIncreible`)
+5. Abre un Pull Request
 
-- [ ] PDF compression
-- [ ] Watermark addition
-- [ ] Image to PDF conversion
-- [ ] OCR text extraction
-- [ ] PDF encryption/decryption
-- [ ] Metadata editing
-- [ ] Page rotation
-- [ ] Web API interface
+## 📄 Licencia
 
-## 🤝 Contributing
+Este proyecto está licenciado bajo la Licencia MIT - ver el archivo [LICENSE](LICENSE) para más detalles.
 
-Contributions are welcome! Please feel free to submit a Pull Request.
+## 💡 Autor
 
-1. Fork the repository
-2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
-3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
-4. Push to the branch (`git push origin feature/AmazingFeature`)
-5. Open a Pull Request
+Creado por **diazaroom-arch**
 
-## 📄 License
+- GitHub: [@diazaroom-arch](https://github.com/diazaroom-arch)
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+## 🙏 Agradecimientos
 
-## 💡 Author
-
-Created by **Aroom Diaz Neyra**
-
-- GitHub: [@Aroom Díaz](https://github.com/diazaroom-arch)
-- Email: diazneyraaroom@gmail.com
-
-## 🙏 Acknowledgments
-
-- Built with [pypdf](https://github.com/py-pdf/pypdf)
-- CLI powered by [Click](https://click.palletsprojects.com/)
-- Inspired by the need for better PDF automation
+- Construido con [pypdf](https://github.com/py-pdf/pypdf)
+- CLI con [Click](https://click.palletsprojects.com/)
+- Inspirado por la necesidad de mejor automatización de PDFs
 
 ---
 
-**⭐ If you find this useful, please star the repository!**
+**⭐ Si encuentras útil este proyecto, por favor dale una estrella al repositorio!**
 
-## 📊 Stats
+## 📊 Estadísticas
 
-![GitHub stars](https://img.shields.io/github/stars/yourusername/pdf-toolkit-pro?style=social)
-![GitHub forks](https://img.shields.io/github/forks/yourusername/pdf-toolkit-pro?style=social)
+![GitHub stars](https://img.shields.io/github/stars/diazaroom-arch/pdf-toolkit-pro?style=social)
+![GitHub forks](https://img.shields.io/github/forks/diazaroom-arch/pdf-toolkit-pro?style=social)
 
-## 🔥 Examples in Action
+## 🔥 Ejemplos en Acción
 
-### Batch Processing
+### Procesamiento por Lotes
 ```bash
-# Process 100 PDFs in seconds
-for file in invoices/*.pdf; do
+# Procesar 100 PDFs en segundos
+for file in facturas/*.pdf; do
     pdf-toolkit split "$file" --pages 1
 done
 ```
 
-### Automation Script
+### Script de Automatización
 ```python
 import os
 from pdf_toolkit import merge_pdfs
 
-# Merge all monthly reports
-reports = [f"report_{i}.pdf" for i in range(1, 13)]
-merge_pdfs(reports, "annual_report.pdf")
+# Combinar todos los reportes mensuales
+reportes = [f"reporte_{i}.pdf" for i in range(1, 13)]
+merge_pdfs(reportes, "reporte_anual.pdf")
 ```
-
-### CI/CD Integration
-```yaml
-# GitHub Actions example
-- name: Merge documentation
-  run: |
-    pdf-toolkit merge-dir docs/ -o documentation.pdf
-```
-
-## 📞 Support
-
-Having issues? Check out:
-- [Issues](https://github.com/yourusername/pdf-toolkit-pro/issues)
-- [Discussions](https://github.com/yourusername/pdf-toolkit-pro/discussions)
-- Email: diazneyraaroom@gmail.com
 
 ---
 
-**Made with ❤️ and Python**
+**Hecho con ❤️ y Python**
